@@ -9,3 +9,11 @@ Provisioning the machine to start is performed by
 [Terraform](https://www.terraform.io/).
 
 [Terraform Plan](terraform/)
+
+## Ansible
+
+Once the host has been provisioned, we use
+[Ansible](https://www.ansible.com/) to configure and secure the
+environment.
+
+[Ansible Playbook](ansible/)
