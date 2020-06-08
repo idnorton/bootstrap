@@ -1,0 +1,45 @@
+---
+- name: install nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: nginx service
+  service:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: install rtmp module for nginx
+  apt:
+    pkg:
+      - libnginx-mod-rtmp
+  notify: reload nginx
+
+- name: nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  notify: reload nginx
+
+- name: disable default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: reload nginx
+
+- name: nginx rtmp stats stylesheet
+  copy:
+    src: stat.xsl
+    dest: /var/www/html/stat.xsl
+
+- name: create /tmp/dash for streaming
+  file:
+    path: /tmp/dash
+    state: directory
+
+- name: create /tmp/hls for streaming
+  file:
+    path: /tmp/hls
+    state: directory
